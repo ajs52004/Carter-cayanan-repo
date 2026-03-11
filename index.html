@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carter Cayanan | Finance & Aviation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0a0f1e;
+      --deep: #060b16;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --sky: #7eb8d4;
+      --sky-pale: #b3d4e8;
+      --white: #f5f0e8;
+      --muted: #8a8a9a;
+      --card: #0e1528;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--deep);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(6, 11, 22, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated sky / altitude lines */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        repeating-linear-gradient(
+          -15deg,
+          transparent,
+          transparent 80px,
+          rgba(126, 184, 212, 0.03) 80px,
+          rgba(126, 184, 212, 0.03) 81px
+        );
+      pointer-events: none;
+    }
+
+    .hero-text { position: relative; z-index: 2; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sky); margin-bottom: 1.5rem;
+    }
+    .hero-tag::before {
+      content: ''; width: 24px; height: 1px; background: var(--sky);
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .hero-name span { color: var(--gold); }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      letter-spacing: 0.25em;
+      color: var(--sky);
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: var(--deep);
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none; cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-ghost {
+      padding: 0.85rem 2rem;
+      background: transparent;
+      color: var(--white);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(245, 240, 232, 0.2);
+      transition: border-color 0.3s, color 0.3s, transform 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--sky); color: var(--sky); transform: translateY(-2px); }
+
+    /* HERO IMAGE SIDE */
+    .hero-visual {
+      position: relative;
+      display: flex; justify-content: center; align-items: center;
+      z-index: 2;
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 340px; height: 420px;
+    }
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      top: -12px; right: -12px;
+      width: 100%; height: 100%;
+      border: 2px solid var(--gold);
+      z-index: 0;
+    }
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -12px; left: -12px;
+      width: 100%; height: 100%;
+      border: 2px solid var(--sky);
+      z-index: 0;
+    }
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      position: relative; z-index: 1;
+      filter: grayscale(20%) contrast(1.05);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: -2rem; left: -3rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      z-index: 3;
+    }
+    .stat-pill {
+      background: var(--card);
+      border-left: 3px solid var(--gold);
+      padding: 0.7rem 1.2rem;
+      display: flex; flex-direction: column;
+      min-width: 150px;
+    }
+    .stat-pill .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-pill .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* altitude badge */
+    .altitude-badge {
+      position: absolute;
+      top: 1rem; right: -2rem;
+      background: rgba(126, 184, 212, 0.1);
+      border: 1px solid var(--sky);
+      padding: 0.8rem 1rem;
+      text-align: center;
+      z-index: 3;
+    }
+    .altitude-badge .alt-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem; color: var(--sky); line-height: 1;
+    }
+    .altitude-badge .alt-label {
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
+      margin: 0 4rem;
+      max-width: calc(100% - 8rem);
+    }
+
+    /* SECTIONS */
+    section { padding: 6rem 4rem; }
+    section:nth-child(even) { background: rgba(14, 21, 40, 0.5); }
+
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--gold); }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted); line-height: 1.9; font-size: 1.05rem; margin-bottom: 1.5rem;
+    }
+    .about-text p strong { color: var(--white); }
+
+    .about-highlights { display: flex; flex-direction: column; gap: 1.5rem; }
+    .highlight-item {
+      padding: 1.5rem;
+      background: var(--card);
+      border-top: 2px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .highlight-item:hover { transform: translateX(6px); }
+    .highlight-item .hi-icon {
+      font-size: 1.8rem; margin-bottom: 0.75rem;
+    }
+    .highlight-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--white); margin-bottom: 0.3rem;
+    }
+    .highlight-item p {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* EXPERIENCE */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--gold), var(--sky), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      padding: 0 0 3rem 2.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -4px; top: 6px;
+      width: 9px; height: 9px;
+      background: var(--gold); border-radius: 50%;
+    }
+    .timeline-item:nth-child(2)::before { background: var(--sky); }
+
+    .ti-meta {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .ti-meta.sky { color: var(--sky); }
+    .timeline-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--white); margin-bottom: 0.25rem;
+    }
+    .timeline-item .company {
+      font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;
+    }
+    .timeline-item ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .timeline-item ul li {
+      font-size: 0.95rem; color: var(--muted); padding-left: 1.2rem; position: relative;
+      line-height: 1.7;
+    }
+    .timeline-item ul li::before {
+      content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.8rem;
+    }
+    .timeline-item:nth-child(2) ul li::before { color: var(--sky); }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card);
+      padding: 2rem;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .skill-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .skill-card:nth-child(2n):hover { border-color: var(--sky); }
+
+    .skill-card .sc-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .skill-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--white); margin-bottom: 0.75rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      background: rgba(201, 168, 76, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(201, 168, 76, 0.2);
+    }
+    .skill-tag.sky-tag {
+      background: rgba(126, 184, 212, 0.1);
+      color: var(--sky);
+      border-color: rgba(126, 184, 212, 0.2);
+    }
+
+    /* EDUCATION */
+    .edu-card {
+      background: var(--card);
+      padding: 2.5rem;
+      border-left: 3px solid var(--gold);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+      max-width: 750px;
+    }
+    .edu-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--white); margin-bottom: 0.4rem;
+    }
+    .edu-card .school { color: var(--sky); font-size: 1rem; margin-bottom: 0.75rem; }
+    .edu-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .edu-badge {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold);
+      padding: 0.5rem 1rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .edu-badge .badge-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; color: var(--gold); display: block;
+    }
+    .edu-badge .badge-sub {
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* CONTACT */
+    #contact { background: var(--navy); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-text p {
+      color: var(--muted); line-height: 1.9; font-size: 1.05rem; margin-bottom: 2rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.3s;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .contact-link:hover { color: var(--gold); }
+    .contact-link .cl-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-form input, .contact-form textarea {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 0;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      padding: 1rem 1.25rem;
+      width: 100%;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--gold); }
+    .contact-form textarea { min-height: 120px; resize: vertical; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--muted); }
+
+    /* FOOTER */
+    footer {
+      background: var(--deep);
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    footer p { font-size: 0.8rem; color: var(--muted); }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem; color: var(--gold); letter-spacing: 0.1em;
+    }
+
+    /* ANIMATIONS */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      animation: fadeIn 0.9s ease forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.3s; }
+    .fade-in:nth-child(3) { animation-delay: 0.5s; }
+    .fade-in:nth-child(4) { animation-delay: 0.7s; }
+
+    /* plane float animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-5deg); }
+      50% { transform: translateY(-12px) rotate(-5deg); }
+    }
+    .plane-deco {
+      position: absolute;
+      font-size: 3rem;
+      opacity: 0.06;
+      animation: float 6s ease-in-out infinite;
+    }
+    .plane-1 { top: 15%; right: 8%; animation-delay: 0s; }
+    .plane-2 { bottom: 25%; right: 3%; font-size: 1.8rem; animation-delay: 3s; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      #hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; gap: 3rem; }
+      .hero-visual { justify-content: flex-start; }
+      .hero-stats { left: 0; bottom: -1rem; flex-direction: row; }
+      .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+      section { padding: 4rem 2rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Carter Cayanan</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="plane-deco plane-1">✈</div>
+    <div class="plane-deco plane-2">✈</div>
+
+    <div class="hero-text">
+      <div class="hero-tag fade-in">Portfolio — Class of 2026</div>
+      <h1 class="hero-name fade-in">Carter <span>Cayanan</span></h1>
+      <div class="hero-title fade-in">Finance · Aviation · Leadership</div>
+      <p class="hero-desc fade-in">
+        Junior at Rutgers Business School with a passion for financial markets and a license to fly. 
+        Grounded in discipline, driven by ambition — whether analyzing portfolios or navigating the sky.
+      </p>
+      <div class="hero-btns fade-in">
+        <a href="#experience" class="btn-primary">View Experience</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+    </div>
+
+    <div class="hero-visual fade-in">
+      <div class="photo-frame">
+        <img src="profile.png" alt="Carter Cayanan" />
+        <div class="altitude-badge">
+          <div class="alt-num">PPL</div>
+          <div class="alt-label">Certified Pilot</div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-pill">
+            <span class="num">3+</span>
+            <span class="label">Yrs Hospitality</span>
+          </div>
+          <div class="stat-pill">
+            <span class="num">RBS</span>
+            <span class="label">Finance Major</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Two Disciplines,<br/>One Ambition</h2>
+        <p>
+          I'm <strong>Carter Cayanan</strong>, a junior at Rutgers Business School from <strong>Northfield, New Jersey</strong>, 
+          majoring in Finance. I believe that the skills that make a great pilot — precision, composure under pressure, 
+          and meticulous preparation — are the same skills that define exceptional financial professionals.
+        </p>
+        <p>
+          Over the past three years, I've built real-world people skills working as a server at the <strong>Borgata Hotel Casino & Spa</strong> 
+          in Atlantic City, one of the most fast-paced and high-volume environments on the East Coast. I've learned to stay 
+          calm, read a room, and deliver results when it counts.
+        </p>
+        <p>
+          Recently, I completed flight school and earned my <strong>Private Pilot License (PPL)</strong>, a goal years in the making. 
+          I'm now pursuing my commercial aviation interests alongside a career in finance — 
+          because I've never believed you have to pick just one altitude.
+        </p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <div class="hi-icon">📈</div>
+          <h4>Financial Acumen</h4>
+          <p>Studying financial markets, investment analysis, and corporate finance at one of the nation's top business schools.</p>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">✈️</div>
+          <h4>Licensed Pilot</h4>
+          <p>Earned Private Pilot License — trained in flight planning, navigation, weather systems, and emergency procedures.</p>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">🎰</div>
+          <h4>Hospitality Pro</h4>
+          <p>3+ years at Borgata Casino, mastering high-pressure service, interpersonal communication, and team coordination.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Work Experience</div>
+    <h2 class="section-title">Where I've Logged Hours</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="ti-meta">2022 – Present · Atlantic City, NJ</div>
+        <h3>Server — Borgata Hotel Casino & Spa</h3>
+        <p class="company">MGM Resorts International</p>
+        <ul>
+          <li>Delivered high-volume table service in one of Atlantic City's most prestigious resort & casino environments</li>
+          <li>Managed multi-table sections during peak hours, ensuring exceptional guest experience under pressure</li>
+          <li>Developed sharp interpersonal and communication skills through thousands of diverse guest interactions</li>
+          <li>Maintained composure and professionalism in a fast-paced, high-stakes environment</li>
+          <li>Consistently met and exceeded service benchmarks, earning strong guest satisfaction ratings</li>
+          <li>Collaborated with kitchen, bar, and management teams to ensure seamless operations</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="ti-meta sky">2023 – 2025 · South Jersey Region</div>
+        <h3>Student Pilot → Private Pilot License</h3>
+        <p class="company">Flight School — Private Pilot Training Program</p>
+        <ul>
+          <li>Completed FAA-certified private pilot ground school and flight training curriculum</li>
+          <li>Logged required solo and dual flight hours across varied weather and visibility conditions</li>
+          <li>Mastered VFR navigation, airspace regulations, flight planning, and emergency protocols</li>
+          <li>Passed FAA Private Pilot Knowledge Test and practical checkride exam</li>
+          <li>Developed precision decision-making, situational awareness, and risk-assessment skills</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Skills & Competencies</div>
+    <h2 class="section-title">What I Bring to the Table</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="sc-icon">💹</div>
+        <h4>Finance & Business</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Financial Analysis</span>
+          <span class="skill-tag">Investment Principles</span>
+          <span class="skill-tag">Corporate Finance</span>
+          <span class="skill-tag">Excel Modeling</span>
+          <span class="skill-tag">Accounting</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sc-icon">✈️</div>
+        <h4>Aviation</h4>
+        <div class="skill-tags">
+          <span class="skill-tag sky-tag">VFR Navigation</span>
+          <span class="skill-tag sky-tag">FAA Regulations</span>
+          <span class="skill-tag sky-tag">Flight Planning</span>
+          <span class="skill-tag sky-tag">Weather Analysis</span>
+          <span class="skill-tag sky-tag">Emergency Procedures</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sc-icon">🤝</div>
+        <h4>Interpersonal</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Customer Relations</span>
+          <span class="skill-tag">Team Collaboration</span>
+          <span class="skill-tag">Conflict Resolution</span>
+          <span class="skill-tag">Public Speaking</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sc-icon">🧠</div>
+        <h4>Professional</h4>
+        <div class="skill-tags">
+          <span class="skill-tag sky-tag">Decision Making</span>
+          <span class="skill-tag sky-tag">Pressure Management</span>
+          <span class="skill-tag sky-tag">Attention to Detail</span>
+          <span class="skill-tag sky-tag">Time Management</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sc-icon">🖥️</div>
+        <h4>Technical Tools</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Microsoft Excel</span>
+          <span class="skill-tag">PowerPoint</span>
+          <span class="skill-tag">Bloomberg (Learning)</span>
+          <span class="skill-tag">Google Workspace</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="sc-icon">🌐</div>
+        <h4>Languages & Soft Skills</h4>
+        <div class="skill-tags">
+          <span class="skill-tag sky-tag">English (Native)</span>
+          <span class="skill-tag sky-tag">Adaptability</span>
+          <span class="skill-tag sky-tag">Leadership</span>
+          <span class="skill-tag sky-tag">Initiative</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label">Education</div>
+    <h2 class="section-title">Academic Foundation</h2>
+    <div class="edu-card">
+      <div>
+        <h3>Bachelor of Science in Business Administration</h3>
+        <div class="school">Rutgers Business School · New Brunswick, NJ</div>
+        <p>
+          Concentration in <strong style="color:var(--white)">Finance</strong> · Expected Graduation: May 2026<br/><br/>
+          Coursework includes corporate finance, investment analysis, financial markets, managerial accounting, 
+          business statistics, and economics. Active member of the Rutgers Business School community with 
+          a focus on building analytical and strategic thinking skills applicable to financial services.
+        </p>
+      </div>
+      <div>
+        <div class="edu-badge" style="margin-bottom:0.75rem">
+          <span class="badge-text">Junior</span>
+          <span class="badge-sub">Class Standing</span>
+        </div>
+        <div class="edu-badge">
+          <span class="badge-text">Finance</span>
+          <span class="badge-sub">Major</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Contact</div>
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h2 class="section-title">Let's Connect</h2>
+        <p>
+          Whether you're looking for a motivated finance intern, want to talk aviation, 
+          or just want to connect — my door (and cockpit) is always open.
+        </p>
+        <div class="contact-links">
+          <a href="#" class="contact-link">
+            <span class="cl-icon">📍</span>
+            Northfield, New Jersey
+          </a>
+          <a href="https://github.com/ajs5004" class="contact-link" target="_blank">
+            <span class="cl-icon">🐙</span>
+            github.com/ajs5004
+          </a>
+          <a href="mailto:carter.cayanan@rutgers.edu" class="contact-link">
+            <span class="cl-icon">✉️</span>
+            carter.cayanan@rutgers.edu
+          </a>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <input type="text" placeholder="Your Name" required />
+          <input type="email" placeholder="Your Email" required />
+          <textarea placeholder="Your Message"></textarea>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Carter Cayanan</div>
+    <p>© 2025 · Built with Claude AI · Rutgers Business School</p>
+    <p style="font-size:0.75rem; color: var(--muted)">Finance · Aviation · NJ</p>
+  </footer>
+
+  <script>
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Scroll-triggered fade in for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.highlight-item, .timeline-item, .skill-card, .edu-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      observer.observe(el);
+    });
+
+    // Nav active state on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.offsetHeight;
+        const id = section.getAttribute('id');
+        const navLink = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (navLink) {
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLink.style.color = 'var(--gold)';
+          } else {
+            navLink.style.color = '';
+          }
+        }
+      });
+    });
+
+    // Form submission handler
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = 'Message Sent ✓';
+      btn.style.background = 'var(--sky)';
+      setTimeout(() => {
+        btn.textContent = 'Send Message';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
